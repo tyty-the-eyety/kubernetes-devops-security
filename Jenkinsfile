@@ -18,11 +18,13 @@ pipeline {
         }
       }
     }
-        stage('Docker image build and push') {
-      steps {
-        sh 'docker build -t docker-registry:5000/java-app:latest .'
+    stage('Docker image build and push') {
+      steps {withDockerRegistry([ credentialsId: "dockerHub", url: "" ])
+        //sh 'docker build -t docker-registry:5000/java-app:latest .'
         //sh 'docker push docker-registry:5000/java-app:latest'
-		sh 'docker ps -a'
+		//sh 'docker ps -a'
+		dockerImage = docker.build("tyronesch/java-app:latest")
+		dockerImage.push()
       }
     }
 
