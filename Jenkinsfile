@@ -33,7 +33,7 @@ pipeline {
 		 steps {
 			withDockerRegistry([ credentialsId: "dockerhubaccount", url: "" ]) {
 			dockerImage = docker.build("tyronesch/java-app:latest")
-			dockerImage.push()
+			//dockerImage.push()
 			}
 		 }
 
