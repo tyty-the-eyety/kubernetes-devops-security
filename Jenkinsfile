@@ -15,6 +15,7 @@ pipeline {
         always {
           junit 'target/surefire-reports/*.xml'
           jacoco execPattern: 'target/jacoco.exec'
+		  sh 'docker logout'
         }
       }
     }
@@ -33,7 +34,7 @@ pipeline {
 		 steps {
 			withDockerRegistry([ credentialsId: "dockerHub", url: "" ]) {
 			//dockerImage = docker.build("tyronesch/java-app:latest")
-			sh 'docker logout'
+			
 			sh 'docker build -t tyronesch:5000/java-app:latest .'
 			sh 'docker push docker-registry:5000/java-app:latest'
 			//dockerImage.push()
