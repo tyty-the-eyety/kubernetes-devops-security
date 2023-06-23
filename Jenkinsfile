@@ -31,7 +31,7 @@ pipeline {
 	*/
 	 stage('Docker image build and push') {
 		 steps {
-			withDockerRegistry([ credentialsId: "dockerhubaccount", url: "" ]) {
+			withDockerRegistry([ credentialsId: "dockerHub", url: "" ]) {
 			//dockerImage = docker.build("tyronesch/java-app:latest")
 			sh 'docker build -t tyronesch:5000/java-app:latest .'
 			sh 'docker push docker-registry:5000/java-app:latest'
