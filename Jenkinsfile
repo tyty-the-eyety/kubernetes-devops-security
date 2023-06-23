@@ -36,7 +36,7 @@ pipeline {
 			//dockerImage = docker.build("tyronesch/java-app:latest")
 			
 			sh 'docker build -t tyronesch:5000/java-app:latest .'
-			sh 'docker push docker-registry:5000/java-app:latest'
+			sh 'docker push tyronesch:5000/java-app:latest'
 			//dockerImage.push()
 			}
 		 }
