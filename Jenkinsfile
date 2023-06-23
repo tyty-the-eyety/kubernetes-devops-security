@@ -18,6 +18,7 @@ pipeline {
         }
       }
     }
+	/*
     stage('Docker image build and push') {
       steps {withDockerRegistry([ credentialsId: "dockerHub", url: "" ])
         //sh 'docker build -t docker-registry:5000/java-app:latest .'
@@ -27,6 +28,12 @@ pipeline {
 		dockerImage.push()
       }
     }
+	*/
+	 stage('Docker image build and push') {
+        withDockerRegistry([ credentialsId: "dockerhubaccount", url: "" ]) {
+		dockerImage = docker.build("tyronesch/java-app:latest")
+        dockerImage.push()
+        }
 
   }
 }
