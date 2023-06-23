@@ -35,8 +35,8 @@ pipeline {
 			withDockerRegistry([ credentialsId: "dockerHub", url: "" ]) {
 			//dockerImage = docker.build("tyronesch/java-app:latest")
 			
-			sh 'docker build -t tyronesch:5000/java-app:latest .'
-			sh 'docker push tyronesch:5000/java-app:latest'
+			sh 'docker build -t tyronesch/java-app:latest .'
+			sh 'docker push tyronesch/java-app:latest'
 			//dockerImage.push()
 			}
 		 }
