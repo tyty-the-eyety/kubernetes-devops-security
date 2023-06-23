@@ -30,10 +30,12 @@ pipeline {
     }
 	*/
 	 stage('Docker image build and push') {
-        withDockerRegistry([ credentialsId: "dockerhubaccount", url: "" ]) {
-		dockerImage = docker.build("tyronesch/java-app:latest")
-        dockerImage.push()
-        }
+		 steps {
+			withDockerRegistry([ credentialsId: "dockerhubaccount", url: "" ]) {
+			dockerImage = docker.build("tyronesch/java-app:latest")
+			dockerImage.push()
+			}
+		 }
 
   }
 }}
