@@ -16,7 +16,7 @@ spec:
         app: devsecops
     spec:
       containers:
-      - image: REPLACE_ME
+      - image: replace
         name: devsecops-container
 ---
 apiVersion: v1
@@ -30,7 +30,6 @@ spec:
   - port: 8080
     protocol: TCP
     targetPort: 8080
-    nodePort: 30010
   selector:
     app: devsecops
   type: NodePort
