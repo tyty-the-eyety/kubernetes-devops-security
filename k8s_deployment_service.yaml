@@ -16,7 +16,7 @@ spec:
         app: devsecops
     spec:
       containers:
-      - image: REPLACE_ME
+      - image: tyronesch/java-app:latest
         name: devsecops-container
 ---
 apiVersion: v1
