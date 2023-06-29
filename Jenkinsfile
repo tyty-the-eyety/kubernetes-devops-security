@@ -18,6 +18,17 @@ pipeline {
 		  sh 'docker logout'
         }
       }
+	  
+	      stage('Mutation Tests - PIT') {
+      steps {
+        sh "mvn org.pitest:pitest-maven:mutationCoverage"
+      }
+      post {
+        always {
+          pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
+        }
+      }
+    }
     }
 	/*
     stage('Docker image build and push') {
@@ -42,27 +53,8 @@ pipeline {
 		 }
 
   }
-   stage('Unit Tests - JUnit and Jacoco') {
-      steps {
-        sh "mvn test"
-      }
-      post {
-        always {
-          junit 'target/surefire-reports/*.xml'
-          jacoco execPattern: 'target/jacoco.exec'
-        }
-      }
-    }
-    stage('Mutation Tests - PIT') {
-      steps {
-        sh "mvn org.pitest:pitest-maven:mutationCoverage"
-      }
-      post {
-        always {
-          pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
-        }
-      }
-    }
+
+
   stage('Kubernetes Deployment - DEV') {
       steps {
         sh "sed -i 's#REPLACE_ME#tyron-esch:5000/java-app:latest#g' k8s_deployment_service.yaml"
