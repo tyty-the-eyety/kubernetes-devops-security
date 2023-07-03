@@ -37,7 +37,7 @@ pipeline {
         withSonarQubeEnv('sonarqube') {
           sh "mvn sonar:sonar \
               -Dsonar.projectKey=devsecops-numeric-application \
-              -Dsonar.host.url=http://192.168.0.27:9000"
+              -Dsonar.host.url=http://192.168.0.27:9000 -Dsonar.token=sqp_d69737c7f775feff548a521d2d0243c7b373a7ab""
       }
         timeout(time: 2, unit: 'MINUTES') {
           script {
