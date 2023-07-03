@@ -23,13 +23,28 @@ pipeline {
 	  
     }
 	
-	stage('sonar qube tests') {
+	/*stage('sonar qube tests - SAST') {
       steps {
         sh "mvn clean verify sonar:sonar   -Dsonar.projectKey=numeric-application   -Dsonar.projectName='numeric-application'   -Dsonar.host.url=http://192.168.0.27:9000   -Dsonar.token=sqp_d69737c7f775feff548a521d2d0243c7b373a7ab"
       }
 
 	  
 	  
+    }*/
+	
+	stage('SonarQube - SAST') {
+      steps {
+        withSonarQubeEnv('sonarqube') {
+          sh "mvn sonar:sonar \
+              -Dsonar.projectKey=devsecops-numeric-application \
+              -Dsonar.host.url=http://192.168.0.27:9000"
+      }
+        timeout(time: 2, unit: 'MINUTES') {
+          script {
+            waitForQualityGate abortPipeline: true
+          }
+        }
+      }
     }
 	
 	//stage('Mutation Tests - PIT') {
