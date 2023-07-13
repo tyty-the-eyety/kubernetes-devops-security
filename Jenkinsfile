@@ -5,8 +5,8 @@ pipeline {
     deploymentName = "devsecops"
     containerName = "devsecops-container"
     serviceName = "devsecops-svc"
-    imageName = "docker-registry:5000/java-app:latest"
-    applicationURL = "http://controlplane:30010"
+    imageName = "tyron-esch:5000/java-app:latest"
+    applicationURL = "http://controlplane"
     applicationURI = "/increment/99"
   }
   
@@ -33,14 +33,7 @@ pipeline {
 	  
     }
 	
-	/*stage('sonar qube tests - SAST') {
-      steps {
-        sh "mvn clean verify sonar:sonar   -Dsonar.projectKey=numeric-application   -Dsonar.projectName='numeric-application'   -Dsonar.host.url=http://192.168.0.27:9000   -Dsonar.token=sqp_d69737c7f775feff548a521d2d0243c7b373a7ab"
-      }
 
-	  
-	  
-    }*/
 	
 	stage('SonarQube - SAST') {
       steps {
