@@ -1046,3 +1046,70 @@ spec:
   selector:
     app: devsecops
   type: NodePort
+
+
+pipeline {
+  agent any
+
+  environment {
+    deploymentName = "devsecops"
+    containerName = "devsecops-container"
+    serviceName = "devsecops-svc"
+    imageName = "docker-registry:5000/java-app:latest"
+    applicationURL = "http://controlplane:30010"
+    applicationURI = "/increment/99"
+  }
+
+  stages {
+
+    stage('Build Artifact - Maven') {
+      steps {
+        sh "mvn clean package -DskipTests=true"
+        archive 'target/*.jar'
+      }
+    }
+
+    stage('Docker Build and Push') {
+      steps {
+          sh 'sudo docker build -t docker-registry:5000/java-app:latest .'
+          sh 'docker push docker-registry:5000/java-app:latest'
+      }
+    }
+
+    stage('Vulnerability Scan - Kubernetes') {
+      steps {
+        sh '/usr/local/bin/conftest test --policy opa-k8s-security.rego k8s_deployment_service.yaml'
+      }
+    }
+
+    stage('K8S Deployment - DEV') {
+      steps {
+        parallel(
+          "Deployment": {
+              sh "bash k8s-deployment.sh"
+          },
+          "Rollout Status": {
+              sh "bash k8s-deployment-rollout-status.sh"
+          }
+        )
+      }
+    }
+
+  }
+  post {
+    always {
+      sh "echo 'Test'"
+    }
+  }
+}
+
+
+    stage('OWASP ZAP - DAST') {
+      steps {
+        sh 'bash zap.sh'
+      }
+    }
+post {
+    always {
+      publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'owasp-zap-report', reportFiles: 'zap_report.html', reportName: 'OWASP ZAP HTML Reports', reportTitles: 'OWASP ZAP HTML Reports'])
+    }
