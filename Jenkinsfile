@@ -5,7 +5,7 @@ pipeline {
     deploymentName = "devsecops"
     containerName = "devsecops-container"
     serviceName = "devsecops-svc"
-    imageName = "tyron-esch:5000/java-app:latest"
+    imageName = "tyronesch/java-app:latest"
     applicationURL = "http://controlplane"
     applicationURI = "/increment/99"
   }
