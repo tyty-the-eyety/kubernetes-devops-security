@@ -7,7 +7,7 @@ pipeline {
     serviceName = "devsecops-svc"
     imageName = "tyronesch/java-app:latest"
     applicationURL = "http://localhost"
-    applicationURI = "/increment/99"
+    applicationURI = "/compare/100"
   }
   
   stages {
