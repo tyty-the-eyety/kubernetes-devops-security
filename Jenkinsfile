@@ -6,7 +6,7 @@ pipeline {
     containerName = "devsecops-container"
     serviceName = "devsecops-svc"
     imageName = "tyronesch/java-app:latest"
-    applicationURL = "http://controlplane"
+    applicationURL = "http://localhost:30010"
     applicationURI = "/increment/99"
   }
   
