@@ -118,12 +118,18 @@ pipeline {
   }
 
 
-  stage('Kubernetes Deployment - DEV') {
+      stage('K8S Deployment - DEV') {
       steps {
-        sh "sed -i 's#REPLACE_ME#tyron-esch:5000/java-app:latest#g' k8s_deployment_service.yaml"
-        sh "kubectl apply -f k8s_deployment_service.yaml"
+        parallel(
+          "Deployment": {
+              sh "bash k8s-deployment.sh"
+          },
+          "Rollout Status": {
+              sh "bash k8s-deployment-rollout-status.sh"
+          }
+        )
       }
-   }
+    }
    stage('Integration Tests - DEV') {
       steps {
         script {
