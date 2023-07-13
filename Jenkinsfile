@@ -1,5 +1,14 @@
 pipeline {
   agent any
+  
+  environment {
+    deploymentName = "devsecops"
+    containerName = "devsecops-container"
+    serviceName = "devsecops-svc"
+    imageName = "docker-registry:5000/java-app:latest"
+    applicationURL = "http://controlplane:30010"
+    applicationURI = "/increment/99"
+  
   stages {
     stage('Build Artifact - Maven') {
       steps {
