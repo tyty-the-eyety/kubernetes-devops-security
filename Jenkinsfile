@@ -149,4 +149,14 @@ pipeline {
         }
       }
     }
+	stage('OWASP ZAP - DAST') {
+      steps {
+        sh 'bash zap.sh'
+      }
+    }
+	post {
+    always {
+     publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'owasp-zap-report', reportFiles: 'zap_report.html', reportName: 'OWASP ZAP HTML Reports', reportTitles: 'OWASP ZAP HTML Reports'])
+    }
+  }
 }}
