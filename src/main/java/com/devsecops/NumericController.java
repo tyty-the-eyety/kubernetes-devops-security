@@ -14,7 +14,7 @@ public class NumericController {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	//private static final String baseURL = "http://localhost:5000/plusone";
-	private static final String baseURL = "http://localhost:5000/plusone";
+	private static final String baseURL = "http://localhost:5000/increment";
 	
 	RestTemplate restTemplate = new RestTemplate();
 	
