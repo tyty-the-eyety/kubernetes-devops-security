@@ -1113,3 +1113,8 @@ post {
     always {
       publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'owasp-zap-report', reportFiles: 'zap_report.html', reportName: 'OWASP ZAP HTML Reports', reportTitles: 'OWASP ZAP HTML Reports'])
     }
+	
+	
+	
+	
+docker run -v $(pwd):/zap/wrk:rw -t owasp/zap2docker-weekly zap-api-scan.py -t http://192.168.0.27:30010/v3/api-docs -f openapi -g gen_file
